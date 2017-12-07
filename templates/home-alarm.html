@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+
+    <body onload="checkAlarm({{alarm_hours}}, {{alarm_minutes}}, '{{am_pm}}')">
+        <div class="home-text-big">Current Alarm:</div>
+        <br>
+        <div class="list-text home-text" >
+            <li>
+                Bedtime:
+                <span class="light-text">
+                    {% if tosleep_minutes == 0 %}
+                        {{tosleep_hours}}:{{tosleep_minutes}}0
+                    {% elif tosleep_minutes < 10 %}
+                        {{tosleep_hours}}:0{{tosleep_minutes}}
+                    {% else %}
+                        {{tosleep_hours}}:{{tosleep_minutes}}
+                    {% endif %}
+                    {{tosleep_am_pm}}
+                </span>
+            </li>
+            <li>
+                Wake up time:
+                <span class="light-text">
+                    {% if alarm_minutes == 0 %}
+                        {{alarm_hours}}:{{alarm_minutes}}0
+                    {% elif alarm_minutes < 10 %}
+                        {{alarm_hours}}:0{{alarm_minutes}}
+                    {% else %}
+                        {{alarm_hours}}:{{alarm_minutes}}
+                    {% endif %}
+                    {{am_pm}}
+                </span>
+            </li>
+            <li>
+                Sleep time:
+                <span class="light-text">
+                    {{sleep_hours}} hrs
+                    {% if sleep_minutes != 0 %}
+                     and {{sleep_minutes}} min
+                    {% endif %}
+                </span>
+            </li>
+        </div>
+    </body>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Alarm
+{% endblock %}
+
+{% block main %}
+    <head>
+        <script>
+            function startTime() {
+                var today = new Date();
+                var h = today.getHours() >= 12 ?  today.getHours()-12 : today.getHours();
+                var am_pm = today.getHours() >= 12 ? "PM" : "AM";
+                if(h == 0){
+                    h = 12;
+                }
+                var m = today.getMinutes() < 10 ? today.getMinutes() : today.getMinutes();
+                var s = today.getSeconds() < 10 ?  today.getSeconds() : today.getSeconds();
+                m = checkTime(m);
+                s = checkTime(s);
+                document.getElementById('txt').innerHTML = h + ":" + m + ":" + s + " " + am_pm;
+                var t = setTimeout(startTime, 500);
+            }
+            function checkTime(i) {
+                if (i < 10) {i = "0" + i};
+                return i;
+            }
+        </script>
+    </head>
+
+<body onload="alarm()">
+    <span id="txt" class="alarm-text"></span>
+    <br>
+    <button type="button" class="btn btn-outline-info btn-lg" onclick="alarmCancel()">&nbsp;&nbsp;&nbsp;OFF&nbsp;&nbsp;&nbsp;</button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="button" class="btn btn-outline-info btn-lg" onclick="alarmSnooze()">SNOOZE</button>
+    <embed src="/static/alarm.mp3" autostart="false" width="0" height="0" id="sound1" enablejavascript="true">
+</body>
+{% endblock %}

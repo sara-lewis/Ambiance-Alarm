@@ -1,0 +1,72 @@
+nav .navbar-brand
+{
+    /* size for brand */
+    font-size: xx-large;
+}
+
+/* colors for brand */
+nav .navbar-brand .blue
+{
+    color: #5DADE2;
+}
+nav .navbar-brand .purple
+{
+    color: #A569BD;
+}
+
+main .form-control
+{
+    /* center form controls */
+    display: inline-block;
+
+    /* override Bootstrap's 100% width for form controls */
+    width: auto;
+}
+
+main
+{
+    /* scroll horizontally as needed */
+    overflow-x: auto;
+
+    /* center contents */
+    text-align: center;
+}
+
+main img
+{
+    /* constrain images on small screens */
+    max-width: 100%;
+}
+
+.home-text {
+    font-size: 250%;
+    color: #5a80bc;
+    font-style: italic;
+}
+
+.home-text-small {
+    font-size: 150%;
+    color: #5a80bc;
+    font-style: italic;
+}
+
+.alarm-text {
+    font-size: 1000%;
+    font-style: normal;
+    color: #5DADE2;
+}
+
+.list-text {
+    text-align:left;
+    padding-left: 20%;
+}
+
+.home-text-big {
+    font-size: 750%;
+    font-style: normal;
+    color: #5DADE2;
+}
+
+.light-text {
+    opacity: 0.7;
+}

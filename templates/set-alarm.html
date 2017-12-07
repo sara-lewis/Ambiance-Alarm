@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Set Alarm
+{% endblock %}
+
+{% block main %}
+    <body onload="elapsedTime({{load_time}})">
+        <form action="/set" method="post">
+            <span class="home-text">I'd like to wake up at</span>
+            <br>
+            <br>
+            <span class="form-group">
+                <select class="form-control" name="clock-hour">
+                    {% for i in range(1,13) %}
+                        {% if i < 10 %}
+                            {% if i == 6 %}
+                                <option selected>&nbsp;06&nbsp;</option>
+                            {% else %}
+                                <option>&nbsp;0{{i}}&nbsp;</option>
+                            {% endif %}
+                        {% else %}
+                            <option>&nbsp;{{i}}&nbsp;</option>
+                            {% endif %}
+                    {% endfor %}
+                </select>
+            </span>
+            <span>:</span>
+            <span class="form-group">
+                <select class="form-control" name="clock-minute">
+                    {% for i in range(1,60) %}
+                        {% if i < 10 %}
+                            <option>&nbsp;0{{i}}&nbsp;</option>
+                        {% else %}
+                            {% if i == 30 %}
+                                <option selected>&nbsp;30&nbsp;</option>
+                            {% else %}
+                                <option>&nbsp;{{i}}&nbsp;</option>
+                            {% endif %}
+                        {% endif %}
+
+                    {% endfor %}
+                </select>
+            </span>
+            <span> &nbsp; &nbsp;</span>
+            <span class="form-group">
+                <select class="form-control" name="clock-am-pm">
+                    <option>AM</option>
+                    <option>PM</option>
+                </select>
+            </span>
+            <br>
+            <br>
+            <span class="home-text">after sleeping for</span>
+            <br>
+            <br>
+            <span class="form-group">
+                <select class="form-control" name="sleep-hours">
+                    {% for i in range(0,21) %}
+                        {% if i < 10 %}
+                            <option>&nbsp;0{{i}}&nbsp;</option>
+                        {% else %}
+                            {% if i == 10 %}
+                                <option selected>&nbsp;10&nbsp;</option>
+                            {% else %}
+                                <option>&nbsp;{{i}}&nbsp;</option>
+                            {% endif %}
+                        {% endif %}
+
+                    {% endfor %}
+                </select>
+            </span>
+            <span class="home-text">&nbsp;hours and&nbsp;</span>
+            <span class="form-group">
+                <select class="form-control" name="sleep-minutes">
+                    {% for i in range(1,60) %}
+                        {% if i < 10 %}
+                            <option>&nbsp;0{{i}}&nbsp;</option>
+                        {% else %}
+                            {% if i == 30 %}
+                                <option selected>&nbsp;30&nbsp;</option>
+                            {% else %}
+                                <option>&nbsp;{{i}}&nbsp;</option>
+                            {% endif %}
+                        {% endif %}
+
+                    {% endfor %}
+                </select>
+            </span>
+            <span class="home-text">&nbsp;minutes.&nbsp;</span>
+            <br>
+            <br>
+            <button class="btn btn-outline-info" type="submit">Done</button>
+        </form>
+    </body>
+{% endblock %}

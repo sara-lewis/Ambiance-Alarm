@@ -1,0 +1,120 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Set Alarm
+{% endblock %}
+
+{% block main %}
+    <body onload="elapsedTime({{load_time}})">
+        <form action="/edit" method="post">
+            <span class="home-text">Your alarm is currently set for {{current_info["alarm_hours"]}}:{{current_info["alarm_minutes"]}} {{am_pm}}<br>
+                with {{current_info["sleep_hours"]}} hours and {{current_info["sleep_minutes"]}} minutes of sleep.</span>
+            <br>
+            <span class="home-text">I'd like to wake up at</span>
+            <br>
+            <br>
+            <span class="form-group">
+                <select class="form-control" name="clock-hour">
+                    {% for i in range(1,13) %}
+                        {% if i < 10 %}
+                            {% if i == current_info["alarm_hours"] %}
+                                <option selected>&nbsp;0{{i}}&nbsp;</option>
+                            {% else %}
+                                <option>&nbsp;0{{i}}&nbsp;</option>
+                            {% endif %}
+                        {% else %}
+                            {% if i == current_info["alarm_hours"] %}
+                                <option selected>&nbsp;{{i}}&nbsp;</option>
+                            {% else %}
+                                <option>&nbsp;{{i}}&nbsp;</option>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </span>
+            <span>:</span>
+            <span class="form-group">
+                <select class="form-control" name="clock-minute">
+                    {% for i in range(1,60) %}
+                        {% if i < 10 %}
+                            {% if i == current_info["alarm_minutes"] %}
+                                <option selected>&nbsp;0{{i}}&nbsp;</option>
+                            {% else %}
+                                <option>&nbsp;0{{i}}&nbsp;</option>
+                            {% endif %}
+                        {% else %}
+                            {% if i == current_info["alarm_minutes"] %}
+                                <option selected>&nbsp;{{i}}&nbsp;</option>
+                            {% else %}
+                                <option>&nbsp;{{i}}&nbsp;</option>
+                            {% endif %}
+                        {% endif %}
+
+                    {% endfor %}
+                </select>
+            </span>
+            <span> &nbsp; &nbsp;</span>
+            <span class="form-group">
+                <select class="form-control" name="clock-am-pm">
+                    {% if am_pm == "AM" %}
+                        <option selected>AM</option>
+                        <option>PM</option>
+                    {% else %}
+                        <option>AM</option>
+                        <option selected>PM</option>
+                    {% endif %}
+                </select>
+            </span>
+            <br>
+            <br>
+            <span class="home-text">after sleeping for</span>
+            <br>
+            <br>
+            <span class="form-group">
+                <select class="form-control" name="sleep-hours">
+                    {% for i in range(0,21) %}
+                        {% if i < 10 %}
+                            {% if i == current_info["sleep_hours"] %}
+                                <option selected>&nbsp;0{{i}}&nbsp;</option>
+                            {% else %}
+                                <option>&nbsp;0{{i}}&nbsp;</option>
+                            {% endif %}
+                        {% else %}
+                            {% if i == current_info["sleep_hours"] %}
+                                <option selected>&nbsp;{{i}}&nbsp;</option>
+                            {% else %}
+                                <option>&nbsp;{{i}}&nbsp;</option>
+                            {% endif %}
+                        {% endif %}
+
+                    {% endfor %}
+                </select>
+            </span>
+            <span class="home-text">&nbsp;hours and&nbsp;</span>
+            <span class="form-group">
+                <select class="form-control" name="sleep-minutes">
+                    {% for i in range(1,60) %}
+                        {% if i < 10 %}
+                            {% if i == current_info["sleep_minutes"] %}
+                                <option selected>&nbsp;0{{i}}&nbsp;</option>
+                            {% else %}
+                                <option>&nbsp;0{{i}}&nbsp;</option>
+                            {% endif %}
+                        {% else %}
+                            {% if i == current_info["sleep_minutes"] %}
+                                <option selected>&nbsp;{{i}}&nbsp;</option>
+                            {% else %}
+                                <option>&nbsp;{{i}}&nbsp;</option>
+                            {% endif %}
+                        {% endif %}
+
+                    {% endfor %}
+                </select>
+            </span>
+            <span class="home-text">&nbsp;minutes.&nbsp;</span>
+            <br>
+            <br>
+            <button class="btn btn-outline-info" type="submit">Done</button>
+        </form>
+    </body>
+{% endblock %}
