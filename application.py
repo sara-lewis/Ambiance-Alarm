@@ -29,7 +29,7 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# New database configuration 
+# New database configuration
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -40,11 +40,10 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     hash = db.Column(db.String(255), unique=True, nullable=False)
-    alarm_hours = db.Column(db.Numeric(precision=8, asdecimal=False, decimal_return_scale=None), unique=False, nullable=True, defult=None)
-    alarm_minutes = db.Column(db.Numeric(precision=8, asdecimal=False, decimal_return_scale=None), unique=False, nullable=True, defult=None)
-    sleep_hours = db.Column(db.Numeric(precision=8, asdecimal=False, decimal_return_scale=None), unique=False, nullable=True, defult=None)
-    sleep_minutes = db.Column(db.Numeric(precision=8, asdecimal=False, decimal_return_scale=None), unique=False, nullable=True, defult=None)
-
+    alarm_hours = db.Column(db.Numeric(precision=8, asdecimal=False, decimal_return_scale=None), unique=False, nullable=True, default=None)
+    alarm_minutes = db.Column(db.Numeric(precision=8, asdecimal=False, decimal_return_scale=None), unique=False, nullable=True, default=None)
+    sleep_hours = db.Column(db.Numeric(precision=8, asdecimal=False, decimal_return_scale=None), unique=False, nullable=True, default=None)
+    sleep_minutes = db.Column(db.Numeric(precision=8, asdecimal=False, decimal_return_scale=None), unique=False, nullable=True, default=None)
 
 
     def __init__(self, name):
