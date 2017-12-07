@@ -46,21 +46,30 @@ class User(db.Model):
     sleep_minutes = db.Column(db.Numeric(precision=8, asdecimal=False, decimal_return_scale=None), unique=False, nullable=True, default=None)
 
 
-    def __init__(self, name):
-        self.name = name
+    # def __init__(self, name):
+    #     self.name = name`
 
 @app.route("/")
 @login_required
 def home():
-    alarm_hours = db.execute("SELECT alarm_hours FROM users WHERE id = :id", id=session["user_id"])[0]["alarm_hours"]
-    alarm_minutes = db.execute("SELECT alarm_minutes FROM users WHERE id = :id", id=session["user_id"])[0]["alarm_minutes"]
+    # alarm_hours = db.execute("SELECT alarm_hours FROM users WHERE id = :id", id=session["user_id"])[0]["alarm_hours"]
+    user_data = User.query.filter_by(id=session["user_id"]).first()
+
+    alarm_hours = user_data.alarm_hours
+    alarm_minutes = user_data.alarm_minutes
+
+
+
+    #alarm_minutes = db.execute("SELECT alarm_minutes FROM users WHERE id = :id", id=session["user_id"])[0]["alarm_minutes"]
+    # alarm_minutes = User.query.filter_by(id=session["user_id"]).first().alarm_minutes
 
     if alarm_hours != None and alarm_minutes != None:
 
         # Calculate remaining things for wake up time and sleep hours
-
-        sleep_hours = db.execute("SELECT sleep_hours FROM users WHERE id = :id", id=session["user_id"])[0]["sleep_hours"]
-        sleep_minutes = db.execute("SELECT sleep_minutes FROM users WHERE id = :id", id=session["user_id"])[0]["sleep_minutes"]
+        sleep_hours = user_data.sleep_hours
+        sleep_minutes = user_data.sleep_minutes
+        # sleep_hours = db.execute("SELECT sleep_hours FROM users WHERE id = :id", id=session["user_id"])[0]["sleep_hours"]
+        # sleep_minutes = db.execute("SELECT sleep_minutes FROM users WHERE id = :id", id=session["user_id"])[0]["sleep_minutes"]
         am_pm = "AM"
         if alarm_hours > 12:
             alarm_hours -= 12
@@ -150,7 +159,9 @@ def register():
         hashed_password = generate_password_hash(request.form.get("password"))
         #result = db.execute("INSERT INTO users (username, hash) VALUES (:username, :hash)",
                             #username=request.form.get("username"), hash=hashed_password)
-        new_user = User(request.form.get("username"), hashed_password)
+
+        # TODO check that username has already been taken
+        new_user = User(username=request.form.get("username"), hash=hashed_password)
         db.session.add(new_user)
         db.session.commit()
 
@@ -159,7 +170,7 @@ def register():
             return apology("username already taken", 400)
 
         # automatic login (and redirection to home page)
-        session["user_id"] = result
+        session["user_id"] = new_user.id
         return redirect("/")
 
     else:
@@ -189,12 +200,25 @@ def set_alarm():
         if request.form.get("clock-am-pm") == "PM":
             alarm_hours += 12
 
-        db.execute("UPDATE users SET alarm_hours=:alarm_hours, alarm_minutes=:alarm_minutes, sleep_hours=:sleep_hours, sleep_minutes=:sleep_minutes WHERE id=:id",
-                   alarm_hours=alarm_hours, alarm_minutes=alarm_minutes, sleep_hours=sleep_hours, sleep_minutes=sleep_minutes, id=session["user_id"])
+        # db.execute("UPDATE users SET alarm_hours=:alarm_hours, alarm_minutes=:alarm_minutes, sleep_hours=:sleep_hours, sleep_minutes=:sleep_minutes WHERE id=:id",
+        #            alarm_hours=alarm_hours, alarm_minutes=alarm_minutes, sleep_hours=sleep_hours, sleep_minutes=sleep_minutes, id=session["user_id"])
+        # # https://stackoverflow.com/questions/6699360/flask-sqlalchemy-update-a-rows-information
+
+        user_data = User.query.filter_by(id=session["user_id"]).first()
+
+        user_data.alarm_hours = alarm_hours
+        user_data.alarm_minutes = alarm_minutes
+        user_data.sleep_hours = sleep_hours
+        user_data.sleep_minutes = sleep_minutes
+
+        db.session.commit()
+
         return redirect("/")
     else:
-        current_info = db.execute("SELECT alarm_hours, alarm_minutes, sleep_hours, sleep_minutes FROM users WHERE id=:id", id=session["user_id"])[0]
-        if current_info["alarm_hours"] == None and current_info["alarm_minutes"] == None and current_info["sleep_minutes"] == None and current_info["sleep_hours"] == None:
+        user_data = User.query.filter_by(id=session["user_id"]).first()
+        # current_info = db.execute("SELECT alarm_hours, alarm_minutes, sleep_hours, sleep_minutes FROM users WHERE id=:id", id=session["user_id"])[0]
+        # if current_info["alarm_hours"] == None and current_info["alarm_minutes"] == None and current_info["sleep_minutes"] == None and current_info["sleep_hours"] == None:
+        if user_data.alarm_hours == None and user_data.alarm_minutes == None and user_data.sleep_hours == None and user_data.sleep_minutes == None:
             new_haven = timezone('EST')
             time = datetime.now(new_haven)
             return render_template("set-alarm.html", load_time=time.minute)
