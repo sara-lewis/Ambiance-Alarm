@@ -17,10 +17,10 @@
                             {% if i == 6 %}
                                 <option selected>&nbsp;06&nbsp;</option>
                             {% else %}
-                                <option>&nbsp;0{{i}}&nbsp;</option>
+                                <option>&nbsp;0{{i|int}}&nbsp;</option>
                             {% endif %}
                         {% else %}
-                            <option>&nbsp;{{i}}&nbsp;</option>
+                            <option>&nbsp;{{i|int}}&nbsp;</option>
                             {% endif %}
                     {% endfor %}
                 </select>

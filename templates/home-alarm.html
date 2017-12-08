@@ -14,11 +14,11 @@
                 Bedtime:
                 <span class="light-text">
                     {% if tosleep_minutes == 0 %}
-                        {{tosleep_hours}}:{{tosleep_minutes}}0
+                        {{tosleep_hours|int}}:{{tosleep_minutes|int}}0
                     {% elif tosleep_minutes < 10 %}
-                        {{tosleep_hours}}:0{{tosleep_minutes}}
+                        {{tosleep_hours|int}}:0{{tosleep_minutes|int}}
                     {% else %}
-                        {{tosleep_hours}}:{{tosleep_minutes}}
+                        {{tosleep_hours|int}}:{{tosleep_minutes|int}}
                     {% endif %}
                     {{tosleep_am_pm}}
                 </span>
@@ -27,11 +27,11 @@
                 Wake up time:
                 <span class="light-text">
                     {% if alarm_minutes == 0 %}
-                        {{alarm_hours}}:{{alarm_minutes}}0
+                        {{alarm_hours|int}}:{{alarm_minutes|int}}0
                     {% elif alarm_minutes < 10 %}
-                        {{alarm_hours}}:0{{alarm_minutes}}
+                        {{alarm_hours|int}}:0{{alarm_minutes|int}}
                     {% else %}
-                        {{alarm_hours}}:{{alarm_minutes}}
+                        {{alarm_hours|int}}:{{alarm_minutes|int}}
                     {% endif %}
                     {{am_pm}}
                 </span>
@@ -39,9 +39,9 @@
             <li>
                 Sleep time:
                 <span class="light-text">
-                    {{sleep_hours}} hrs
+                    {{sleep_hours|int}} hrs
                     {% if sleep_minutes != 0 %}
-                     and {{sleep_minutes}} min
+                     and {{sleep_minutes|int}} min
                     {% endif %}
                 </span>
             </li>

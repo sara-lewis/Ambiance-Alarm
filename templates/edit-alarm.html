@@ -7,8 +7,8 @@
 {% block main %}
     <body onload="elapsedTime({{load_time}})">
         <form action="/edit" method="post">
-            <span class="home-text">Your alarm is currently set for {{current_info["alarm_hours"]}}:{{current_info["alarm_minutes"]}} {{am_pm}}<br>
-                with {{current_info["sleep_hours"]}} hours and {{current_info["sleep_minutes"]}} minutes of sleep.</span>
+            <span class="home-text">Your alarm is currently set for {{current_info["alarm_hours"]|int}}:{{current_info["alarm_minutes"]|int}} {{am_pm}}<br>
+                with {{current_info["sleep_hours"]|int}} hours and {{current_info["sleep_minutes"]|int}} minutes of sleep.</span>
             <br>
             <span class="home-text">I'd like to wake up at</span>
             <br>
