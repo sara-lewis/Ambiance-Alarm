@@ -6,6 +6,7 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime
+from decimal import *
 from pytz import timezone
 import json
 import requests
@@ -48,12 +49,30 @@ class User(db.Model):
     alarm_minutes = db.Column(db.Numeric(precision=8, asdecimal=False, decimal_return_scale=None), unique=False, nullable=True, default=None)
     sleep_hours = db.Column(db.Numeric(precision=8, asdecimal=False, decimal_return_scale=None), unique=False, nullable=True, default=None)
     sleep_minutes = db.Column(db.Numeric(precision=8, asdecimal=False, decimal_return_scale=None), unique=False, nullable=True, default=None)
-    light_x = db.Column(db.Numeric(16,16), unique=False, nullable=False, default=0.3127159072215825)
-    light_y = db.Column(db.Numeric(16,16), unique=False, nullable=False, default=0.3290014805066623)
+    light_color = db.Column(db.String(80), unique=False, nullable=False, default="white")
 
 # , light_x=0.3127159072215825, light_y=0.3290014805066623
     # def __init__(self, name):
     #     self.name = name`
+
+# Dictionary that stores different color options
+colors = {
+    "red": [0.6400744994567747, 0.3299705106316933], # (255, 0, 0)
+    "red-orange": [0.5219813776044138, 0.3602350492539979], #(255, 112, 77)
+    "orange": [0.5005024777110524, 0.4407949382859346], # (255, 165, 0)
+    "orange-yellow": [0.4731432272758976, 0.4129857657078348], #(255, 166, 77)
+    "yellow": [0.4614965184140797, 0.4656773286255034], #(255,200,26)
+    "yellow-green": [0.4175109486448015, 0.5022617658094053], #(255,255,26)
+    "green": [0.3, 0.6], # (0, 255, 0)
+    "green-blue": [0.26350800086412973, 0.46861586125148175], #(0, 255, 153)
+    "blue": [0.15001662234042554, 0.060006648936170214], # (0, 0, 255)
+    "blue-purple": [0.18256797560218047, 0.07793859012170523], #(102, 0, 255)
+    "purple": [0.2579616021122056, 0.11947155083982063], #(153,0,204)
+    "purple-pink": [0.32092016238159676, 0.15415426251691478], # (153,0,153)
+    "pink": [0.4362826696315353, 0.2787851427845718], #(255, 102, 153)
+    "white": [0.3127159072215825, 0.3290014805066623], #(255, 255, 255)
+    "warm-white": [0.3429773067238816, 0.3790334156080013] #(255,255,204)
+}
 
 @app.route("/")
 @login_required
@@ -64,10 +83,18 @@ def home():
     alarm_hours = user_data.alarm_hours
     alarm_minutes = user_data.alarm_minutes
 
-
-
     #alarm_minutes = db.execute("SELECT alarm_minutes FROM users WHERE id = :id", id=session["user_id"])[0]["alarm_minutes"]
     # alarm_minutes = User.query.filter_by(id=session["user_id"]).first().alarm_minutes
+
+    #### SET LIGHTBULB HERE #####
+
+    light_url = "http://192.168.2.2/api/NNuOW4NbRZMctLhEPfmFL-FqJAx7afgVhjSlg5wN/lights/2/state"
+    light_info = {"on":True, "xy":[str(Decimal(user_data.light_x)), str(Decimal(user_data.light_y))]}
+    print(light_info)
+    status = requests.put(light_url, data=json.dumps(light_info))
+    print(status)
+
+    #### END LIGHTBULB SETUP ####
 
     if alarm_hours != None and alarm_minutes != None:
 
@@ -323,20 +350,26 @@ def cancel_alarm():
 @login_required
 def set_light():
     if request.method == "POST":
-        converter = Converter()
-        red_value = int(request.form.get("red"))
-        green_value = int(request.form.get("green"))
-        blue_value = int(request.form.get("blue"))
-        xy_value = converter.rgb_to_xy(red_value, green_value, blue_value)
-        print(xy_value)
+        # Get light information from set light page and associate it with a color
+        color = request.form.get("color")
+
+
+
+        # Update table with new light information
+        user_data = User.query.filter_by(id=session["user_id"]).first()
+        user_data.light_x = xy_value[0]
+        user_data.light_y = xy_value[1]
+        db.session.commit()
+
         return redirect("/")
     else:
-        return render_template("set-lights.html")
+        colors = ["red", "red-orange", "orange", "orange-yellow", "yellow", "yellow-green", "green", "green-blue", "blue", "blue-purple", "purple", "purple-pink", "pink", "white", "warm-white"]
+        return render_template("set-lights.html", colors=colors)
+
 
 def errorhandler(e):
     """Handle error"""
     #return apology(e.name, e.code)
-
 
 # listen for errors
 for code in default_exceptions:

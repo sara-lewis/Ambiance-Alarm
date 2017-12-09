@@ -12,45 +12,51 @@
 
   </head>
 
-  <body onload="checkColor()">
+  <body>
+    <div class="home-text-small">Select the number that corresponds to the color you want your lightbulb to turn</div>
+    <br>
     <form action="/set-light" method="post">
       <div class="row">
-        <div class="column">
-          <div class="form-group">
-               Red:&nbsp;&nbsp;&nbsp;&nbsp; <input id="red" onblur="checkColor()" size="3" autocomplete="off"  class="form-control" name="red" value=255 type="text"/>
-          </div>
-          <div class="form-group">
-              Green: <input id="green" onblur="checkColor()" size="3" autocomplete="off"  class="form-control" name="green" value=255 type="text"/>
-          </div>
-          <div class="form-group">
-              Blue:&nbsp;&nbsp;&nbsp; <input id="blue" onblur="checkColor()" size="3" autocomplete="off"  class="form-control" name="blue" value=0 type="text"/>
-          </div>
-        </div>
-        <div class="row">
-          <div><canvas id="myCanvas" width="200" height="140" style="border:1px solid #c3c3c3;"></canvas></div>
+        <div class="box" style="background-color: #ff0000">red</div>
+        <div class="box" style="background-color: #ff704d">red-orange</div>
+        <div class="box" style="background-color: #ffa500">orange</div>
+        <div class="box" style="background-color: #ffa64d">orange-yellow</div>
+        <div class="box" style="background-color: #ffc81a">yellow</div>
+      </div>
+      <div class="row">
+        <div class="box" style="background-color: #ffff1a">yellow-green</div>
+        <div class="box" style="background-color: #00ff00">green</div>
+        <div class="box" style="background-color: #00ff99">green-blue</div>
+        <div class="box" style="background-color: #0000ff">blue</div>
+        <div class="box" style="background-color: #6600ff">blue-purple</div>
+      </div>
+      <div class="row">
+        <div class="box" style="background-color: #9900cc">purple</div>
+        <div class="box" style="background-color: #990099">purple-pink</div>
+        <div class="box" style="background-color: #ff6699">pink</div>
+        <div class="box" style="border-style: solid; border-color:black; background-color: #ffffff">white</div>
+        <div class="box" style="background-color: #ffffcc">warm-white</div>
+      </div>
+
         </div>
       </div>
       <br>
-      <button type="button" class="btn btn-info btn-lg" onclick="checkColor()">Check Color</button>
-      <span class="white-space"></span>
-      <button class="btn btn-info btn-lg" type="submit"> Submit Changes </button>
+      <select name="color" class="form-control form-control-lg">
+          {% for i in colors %}
+              <option>{{i}}</option>
+          {% endfor %}
+      </select>
+      <br>
+      <br>
+      <button class="btn btn-info btn-lg" type="submit"> Submit </button>
       <br>
       <br>
     </form>
   </body>
 
   <script>
-    function checkColor(){
-      var canvas = document.getElementById("myCanvas");
-      var ctx = canvas.getContext("2d");
-      var redVal = (document.getElementById("red").value);
-      var greenVal = (document.getElementById("green").value);
-      var blueVal = (document.getElementById("blue").value);
-      var rgbVal = "rgba("+redVal+", "+greenVal+", "+blueVal+", 1)";
-      console.log(rgbVal);
-      ctx.fillStyle = rgbVal;
-      ctx.fillRect(0,0,200,140);
-    }
+    function addBorder(){
 
+    }
   </script>
 {% endblock %}

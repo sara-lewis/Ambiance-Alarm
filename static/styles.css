@@ -46,7 +46,7 @@ main img
 
 .home-text-small {
     font-size: 150%;
-    color: #5a80bc;
+    color: #348496;
     font-style: italic;
 }
 
@@ -89,6 +89,10 @@ main img
   padding-left: 6%;
 }
 
-.white-space{
-  padding-left: 21%;
+.box{
+  width: 190px;
+  height: 100px;
+  margin: 5px;
+  font-size: 180%;
+  padding-top: 25px;
 }
