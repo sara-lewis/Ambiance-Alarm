@@ -51,7 +51,7 @@ class User(db.Model):
     light_x = db.Column(db.Numeric(precision=8, asdecimal=True, decimal_return_scale=None), unique=False, nullable=False, default=0.3127159072215825)
     light_y = db.Column(db.Numeric(precision=8, asdecimal=True, decimal_return_scale=None), unique=False, nullable=False, default=0.3290014805066623)
 
-
+# , light_x=0.3127159072215825, light_y=0.3290014805066623
     # def __init__(self, name):
     #     self.name = name`
 
