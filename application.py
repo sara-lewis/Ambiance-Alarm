@@ -48,8 +48,8 @@ class User(db.Model):
     alarm_minutes = db.Column(db.Numeric(precision=8, asdecimal=False, decimal_return_scale=None), unique=False, nullable=True, default=None)
     sleep_hours = db.Column(db.Numeric(precision=8, asdecimal=False, decimal_return_scale=None), unique=False, nullable=True, default=None)
     sleep_minutes = db.Column(db.Numeric(precision=8, asdecimal=False, decimal_return_scale=None), unique=False, nullable=True, default=None)
-    light_x = db.Column(db.Numeric(precision=8, asdecimal=True, decimal_return_scale=None), unique=False, nullable=False, default=None)
-    light_y = db.Column(db.Numeric(precision=8, asdecimal=True, decimal_return_scale=None), unique=False, nullable=False, default=None)
+    light_x = db.Column(db.Numeric(precision=8, asdecimal=True, decimal_return_scale=None), unique=False, nullable=False, default=0)
+    light_y = db.Column(db.Numeric(precision=8, asdecimal=True, decimal_return_scale=None), unique=False, nullable=False, default=0)
 
 
     # def __init__(self, name):
