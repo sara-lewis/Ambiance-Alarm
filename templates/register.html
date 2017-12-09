@@ -5,6 +5,29 @@
 {% endblock %}
 
 {% block main %}
+  <head>
+    <script>
+      function error(error_code){
+        var error_msg = null;
+        if(error_code == 1){
+          error_msg = "Must provide username.";
+        }else if(error_code == 2){
+          error_msg = "Must provide password.";
+        }else if(error_code == 3){
+          error_msg = "Must provide confirmation password";
+        }else if(error_code == 4){
+          error_msg = "Password and confirmation don't match.";
+        }else if(error_code == 5){
+          error_msg = "Username already taken.";
+        }
+        if(error_code != 0){
+          alert(error_msg);
+        }
+      }
+    </script>
+  </head>
+
+  <body onload="error({{error_code}})">
     <form action="/register" method="post">
         <div class="form-group">
             <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
@@ -17,4 +40,5 @@
         </div>
         <button class="btn btn-primary" type="submit">Register</button>
     </form>
+  </body>
 {% endblock %}

@@ -40,7 +40,7 @@ main img
 
 .home-text {
     font-size: 250%;
-    color: #5a80bc;
+    color: #348496;
     font-style: italic;
 }
 
@@ -69,4 +69,26 @@ main img
 
 .light-text {
     opacity: 0.7;
+}
+
+.done-width {
+    width: 300px;
+    margin: auto;
+}
+
+.snooze-width {
+    width: 150px;
+    margin: auto;
+}
+
+.column {
+    width: 50%;
+}
+
+.row {
+  padding-left: 6%;
+}
+
+.white-space{
+  padding-left: 21%;
 }

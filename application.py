@@ -7,8 +7,12 @@ from werkzeug.exceptions import default_exceptions
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime
 from pytz import timezone
+import json
+import requests
+import time
 
 from helpers import apology, login_required
+from lightHelpers import Converter
 
 # Configure application
 app = Flask(__name__)
@@ -44,6 +48,8 @@ class User(db.Model):
     alarm_minutes = db.Column(db.Numeric(precision=8, asdecimal=False, decimal_return_scale=None), unique=False, nullable=True, default=None)
     sleep_hours = db.Column(db.Numeric(precision=8, asdecimal=False, decimal_return_scale=None), unique=False, nullable=True, default=None)
     sleep_minutes = db.Column(db.Numeric(precision=8, asdecimal=False, decimal_return_scale=None), unique=False, nullable=True, default=None)
+    light_x = db.Column(db.Numeric(precision=8, asdecimal=True, decimal_return_scale=None), unique=False, nullable=False, default=0)
+    light_y = db.Column(db.Numeric(precision=8, asdecimal=True, decimal_return_scale=None), unique=False, nullable=False, default=0)
 
 
     # def __init__(self, name):
@@ -111,11 +117,11 @@ def login():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            return apology("must provide username", 403)
+            return render_template("login.html", error_code=1)
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return apology("must provide password", 403)
+            return render_template("login.html", error_code=2)
 
         # Query database for username
         # rows = db.execute("SELECT * FROM users WHERE username = :username",
@@ -125,7 +131,7 @@ def login():
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            return apology("invalid username and/or password", 403)
+            return render_template("login.html", error_code=3)
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
@@ -135,7 +141,7 @@ def login():
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-        return render_template("login.html")
+        return render_template("login.html", error_code=0)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -143,19 +149,19 @@ def register():
     if request.method == "POST":
         # Ensure username was submitted
         if not request.form.get("username"):
-            return apology("must provide username", 400)
+            return render_template("register.html", error_code=1)
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return apology("must provide password", 400)
+            return render_template("register.html", error_code=2)
 
         # Ensure password was submitted for a second time
         elif not request.form.get("confirmation"):
-            return apology("must provide confirmation password", 400)
+            return render_template("register.html", error_code=3)
 
         # Ensure password and confirmation password match
         elif request.form.get("password") != request.form.get("confirmation"):
-            return apology("password and confirmation don't match", 400)
+            return render_template("register.html", error_code=4)
 
         # Add user to database
         hashed_password = generate_password_hash(request.form.get("password"))
@@ -166,7 +172,7 @@ def register():
 
         # Check for insertion failures
         if user_data is not None:
-            return apology("username already taken", 400)
+            return render_template("register.html", error_code=5)
         else:
             new_user = User(username=request.form.get("username"), hash=hashed_password)
             db.session.add(new_user)
@@ -177,7 +183,7 @@ def register():
         return redirect("/")
 
     else:
-        return render_template("register.html")
+        return render_template("register.html", error_code=0)
 
 @app.route("/logout")
 def logout():
@@ -313,6 +319,19 @@ def cancel_alarm():
 
     return redirect("/")
 
+@app.route("/set-light", methods=["GET", "POST"])
+@login_required
+def set_light():
+    if request.method == "POST":
+        converter = Converter()
+        red_value = int(request.form.get("red"))
+        green_value = int(request.form.get("green"))
+        blue_value = int(request.form.get("blue"))
+        xy_value = converter.rgb_to_xy(red_value, green_value, blue_value)
+        print(xy_value)
+        return redirect("/")
+    else:
+        return render_template("set-lights.html")
 
 def errorhandler(e):
     """Handle error"""

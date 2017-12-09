@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Set Light
+{% endblock %}
+
+{% block main %}
+
+
+
+  <head>
+
+  </head>
+
+  <body onload="checkColor()">
+    <form action="/set-light" method="post">
+      <div class="row">
+        <div class="column">
+          <div class="form-group">
+               Red:&nbsp;&nbsp;&nbsp;&nbsp; <input id="red" onblur="checkColor()" size="3" autocomplete="off"  class="form-control" name="red" value=255 type="text"/>
+          </div>
+          <div class="form-group">
+              Green: <input id="green" onblur="checkColor()" size="3" autocomplete="off"  class="form-control" name="green" value=255 type="text"/>
+          </div>
+          <div class="form-group">
+              Blue:&nbsp;&nbsp;&nbsp; <input id="blue" onblur="checkColor()" size="3" autocomplete="off"  class="form-control" name="blue" value=0 type="text"/>
+          </div>
+        </div>
+        <div class="row">
+          <div><canvas id="myCanvas" width="200" height="140" style="border:1px solid #c3c3c3;"></canvas></div>
+        </div>
+      </div>
+      <br>
+      <button type="button" class="btn btn-info btn-lg" onclick="checkColor()">Check Color</button>
+      <span class="white-space"></span>
+      <button class="btn btn-info btn-lg" type="submit"> Submit Changes </button>
+      <br>
+      <br>
+    </form>
+  </body>
+
+  <script>
+    function checkColor(){
+      var canvas = document.getElementById("myCanvas");
+      var ctx = canvas.getContext("2d");
+      var redVal = (document.getElementById("red").value);
+      var greenVal = (document.getElementById("green").value);
+      var blueVal = (document.getElementById("blue").value);
+      var rgbVal = "rgba("+redVal+", "+greenVal+", "+blueVal+", 1)";
+      console.log(rgbVal);
+      ctx.fillStyle = rgbVal;
+      ctx.fillRect(0,0,200,140);
+    }
+
+  </script>
+{% endblock %}
