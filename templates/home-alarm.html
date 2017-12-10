@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block main %}
-
-    <body onload="checkAlarm({{alarm_hours}}, {{alarm_minutes}}, '{{am_pm}}')">
+<!-- Home page when an alarm has been set -->
+    <body onload="onLoadHome({{tosleep_hours}}, {{tosleep_minutes}}, {{alarm_hours}}, {{alarm_minutes}})">
         <div class="home-text-big">Current Alarm:</div>
         <br>
         <div class="list-text home-text" >
@@ -14,11 +14,11 @@
                 Bedtime:
                 <span class="light-text">
                     {% if tosleep_minutes == 0 %}
-                        {{tosleep_hours|int}}:{{tosleep_minutes|int}}0
+                        {{display_tosleep_hours|int}}:{{tosleep_minutes|int}}0
                     {% elif tosleep_minutes < 10 %}
-                        {{tosleep_hours|int}}:0{{tosleep_minutes|int}}
+                        {{display_tosleep_hours|int}}:0{{tosleep_minutes|int}}
                     {% else %}
-                        {{tosleep_hours|int}}:{{tosleep_minutes|int}}
+                        {{display_tosleep_hours|int}}:{{tosleep_minutes|int}}
                     {% endif %}
                     {{tosleep_am_pm}}
                 </span>
@@ -27,11 +27,11 @@
                 Wake up time:
                 <span class="light-text">
                     {% if alarm_minutes == 0 %}
-                        {{alarm_hours|int}}:{{alarm_minutes|int}}0
+                        {{display_alarm_hours|int}}:{{alarm_minutes|int}}0
                     {% elif alarm_minutes < 10 %}
-                        {{alarm_hours|int}}:0{{alarm_minutes|int}}
+                        {{display_alarm_hours|int}}:0{{alarm_minutes|int}}
                     {% else %}
-                        {{alarm_hours|int}}:{{alarm_minutes|int}}
+                        {{display_alarm_hours|int}}:{{alarm_minutes|int}}
                     {% endif %}
                     {{am_pm}}
                 </span>

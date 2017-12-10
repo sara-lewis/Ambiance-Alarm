@@ -5,8 +5,11 @@
 {% endblock %}
 
 {% block main %}
+<!-- Home page when no alarm is set -->
     <head>
         <script>
+        // Note: this javascript function is here because for some reason it stopped working
+        //       when it was factored out to a different document 
             function startTime() {
                 var today = new Date();
                 var h = today.getHours() >= 12 ?  today.getHours()-12 : today.getHours();

@@ -5,58 +5,37 @@
 {% endblock %}
 
 {% block main %}
-
-
-
-  <head>
-
-  </head>
-
-  <body>
-    <div class="home-text-small">Select the number that corresponds to the color you want your lightbulb to turn</div>
+<!-- Page where user can set light to whatever he/she wants -->
+  <body onload="elapsedTime({{load_time}})">
     <br>
-    <form action="/set-light" method="post">
-      <div class="row">
-        <div class="box" style="background-color: #ff0000">red</div>
-        <div class="box" style="background-color: #ff704d">red-orange</div>
-        <div class="box" style="background-color: #ffa500">orange</div>
-        <div class="box" style="background-color: #ffa64d">orange-yellow</div>
-        <div class="box" style="background-color: #ffc81a">yellow</div>
-      </div>
-      <div class="row">
-        <div class="box" style="background-color: #ffff1a">yellow-green</div>
-        <div class="box" style="background-color: #00ff00">green</div>
-        <div class="box" style="background-color: #00ff99">green-blue</div>
-        <div class="box" style="background-color: #0000ff">blue</div>
-        <div class="box" style="background-color: #6600ff">blue-purple</div>
-      </div>
-      <div class="row">
-        <div class="box" style="background-color: #9900cc">purple</div>
-        <div class="box" style="background-color: #990099">purple-pink</div>
-        <div class="box" style="background-color: #ff6699">pink</div>
-        <div class="box" style="border-style: solid; border-color:black; background-color: #ffffff">white</div>
-        <div class="box" style="background-color: #ffffcc">warm-white</div>
-      </div>
-
+    <div class="home-text-small">Select the color you want the lightbulb to turn</div>
+      <br>
+      <br>
+        <div class="row">
+          <button class="box" onclick="redirectColors('/red')" style="background-color: #ff0000">red</button>
+          <button class="box" onclick="redirectColors('/red-orange')" style="background-color: #ff704d">red-orange</button>
+          <button class="box" onclick="redirectColors('/orange')" style="background-color: #ffa500">orange</button>
+          <button class="box" onclick="redirectColors('/orange-yellow')" style="background-color: #ffa64d">orange-yellow</button>
+          <button class="box" onclick="redirectColors('/yellow')" style="background-color: #ffc81a">yellow</button>
+        </div>
+        <div class="row">
+          <button class="box" onclick="redirectColors('/yellow-green')" style="background-color: #ffff1a">yellow-green</button>
+          <button class="box" onclick="redirectColors('/green')" style="background-color: #00ff00">green</button>
+          <button class="box" onclick="redirectColors('/green-blue')" style="background-color: #00ff99">green-blue</button>
+          <button class="box" onclick="redirectColors('/blue')" style="background-color: #0000ff">blue</button>
+          <button class="box" onclick="redirectColors('/blue-purple')" style="background-color: #6600ff">blue-purple</button>
+        </div>
+        <div class="row">
+          <button class="box" onclick="redirectColors('/purple')" style="background-color: #9900cc">purple</button>
+          <button class="box" onclick="redirectColors('/purple-pink')" style="background-color: #990099">purple-pink</button>
+          <button class="box" onclick="redirectColors('/pink')" style="background-color: #ff6699">pink</button>
+          <button class="box" onclick="redirectColors('/white')" style="border-style: solid; border-color:black; background-color: #ffffff">white</button>
+          <button class="box" onclick="redirectColors('/warm-white')" style="background-color: #ffffcc">warm-white</button>
+        </div>
+        <br>
+        <div class="row">
+          <button class="box-thin" onclick="redirectColors('/turn-light-off')" style="border-style: solid; border-color:black; background-color: #000000">turn light off</button>
         </div>
       </div>
-      <br>
-      <select name="color" class="form-control form-control-lg">
-          {% for i in colors %}
-              <option>{{i}}</option>
-          {% endfor %}
-      </select>
-      <br>
-      <br>
-      <button class="btn btn-info btn-lg" type="submit"> Submit </button>
-      <br>
-      <br>
-    </form>
   </body>
-
-  <script>
-    function addBorder(){
-
-    }
-  </script>
 {% endblock %}

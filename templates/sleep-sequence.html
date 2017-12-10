@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sleep Sequence
+{% endblock %}
+
+{% block main %}
+<!-- page with buttons that change the color of light to the color of the button -->
+  <body onload="elapsedTime({{load_time}})">
+    <br>
+    <div class="home-text-small">Test the sleep and wake up sequences to see the AmbianceAlarm in action!</div>
+      <br>
+      <br>
+        <div class="row">
+          <button class="box-small" onclick="redirectColors('/warm-white2')" style="background-color: #ffffcc"></button>
+          <button class="box-small" onclick="redirectColors('/tosleep1')" style="background-color: #FFF3BD"></button>
+          <button class="box-small" onclick="redirectColors('/tosleep2')" style="background-color: #FFE7AD"></button>
+          <button class="box-small" onclick="redirectColors('/tosleep3')" style="background-color: #FFDA9E"></button>
+          <button class="box-small" onclick="redirectColors('/tosleep4')" style="background-color: #FFCE8F"></button>
+          <button class="box-small" onclick="redirectColors('/tosleep5')" style="background-color: #FFC280"></button>
+          <button class="box-small" onclick="redirectColors('/tosleep6')" style="background-color: #FFB670"></button>
+          <button class="box-small" onclick="redirectColors('/tosleep7')" style="background-color: #FFAA61"></button>
+          <button class="box-small" onclick="redirectColors('/tosleep8')" style="background-color: #FF9D52"></button>
+          <button class="box-small" onclick="redirectColors('/tosleep9')" style="background-color: #FF9142"></button>
+          <button class="box-small" onclick="redirectColors('/sleep-color')" style="background-color: #FF8533"></button>
+        </div>
+        <br><br>
+        <div class="row">
+          <button class="box-small" onclick="redirectColors('/sleep-color')" style="background-color: #FF8533"></button>
+          <button class="box-small" onclick="redirectColors('/toawake1')" style="background-color: #EB8C47"></button>
+          <button class="box-small" onclick="redirectColors('/toawake2')" style="background-color: #D6935C"></button>
+          <button class="box-small" onclick="redirectColors('/toawake3')" style="background-color: #C29A70"></button>
+          <button class="box-small" onclick="redirectColors('/toawake4')" style="background-color: #ADA185"></button>
+          <button class="box-small" onclick="redirectColors('/toawake5')" style="background-color: #99A999"></button>
+          <button class="box-small" onclick="redirectColors('/toawake6')" style="background-color: #85B0AD"></button>
+          <button class="box-small" onclick="redirectColors('/toawake7')" style="background-color: #70B7C2"></button>
+          <button class="box-small" onclick="redirectColors('/toawake8')" style="background-color: #5CBED6"></button>
+          <button class="box-small" onclick="redirectColors('/toawake9')" style="background-color: #47C5EB"></button>
+          <button class="box-small" onclick="redirectColors('/awake-color')" style="background-color: #33ccff"></button>
+        </div>
+      </div>
+  </body>
+{% endblock %}
