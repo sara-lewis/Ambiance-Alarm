@@ -171,6 +171,10 @@ def login():
 
         # Query database for username
         user_data = User.query.filter_by(username=request.form.get("username")).first()
+
+        if user_data == None:
+            return render_template("login.html", error_code=3)
+        
         rows = current_info = [{"alarm_hours":user_data.alarm_hours, "alarm_minutes":user_data.alarm_minutes, "sleep_hours":user_data.sleep_hours, "sleep_minutes":user_data.sleep_minutes, "hash":user_data.hash, "id":user_data.id}]
 
         # Ensure username exists and password is correct
@@ -699,7 +703,7 @@ def sleep_sequence():
     time = datetime.now(new_haven)
     return render_template("sleep-sequence.html", load_time=time.minute)
 
-# errorhandler function deals with errors 
+# errorhandler function deals with errors g
 def errorhandler(e):
     """Handle error"""
     return apology(e.name, e.code)
